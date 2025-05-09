@@ -1,0 +1,59 @@
+{
+  "name": "MCP_TRAINING",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "MCP_TRAINING/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/MCP_TRAINING",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "MCP_TRAINING/src/main.ts",
+        "tsConfig": "MCP_TRAINING/tsconfig.app.json",
+        "assets": ["MCP_TRAINING/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "MCP_TRAINING:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "MCP_TRAINING:build:development"
+        },
+        "production": {
+          "buildTarget": "MCP_TRAINING:build:production"
+        }
+      }
+    }
+  }
+}
